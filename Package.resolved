@@ -1,0 +1,43 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "BlinkKit",
+        "repositoryURL": "https://github.com/grigorye/BlinkKit",
+        "state": {
+          "branch": "master",
+          "revision": "a95ac800b4f0ae61d4a06a1529f7297b173b446e",
+          "version": null
+        }
+      },
+      {
+        "package": "BlinkOpenAPI",
+        "repositoryURL": "https://github.com/grigorye/BlinkOpenAPI-Swift",
+        "state": {
+          "branch": "master",
+          "revision": "e84e593a33f34e186bca7671274d93cf95073ab8",
+          "version": null
+        }
+      },
+      {
+        "package": "GETracing",
+        "repositoryURL": "https://github.com/grigorye/GETracing",
+        "state": {
+          "branch": "master",
+          "revision": "29dc7fb921802bc55f6c8e2cfc310c9c0b38f535",
+          "version": null
+        }
+      },
+      {
+        "package": "swift-argument-parser",
+        "repositoryURL": "https://github.com/apple/swift-argument-parser",
+        "state": {
+          "branch": null,
+          "revision": "92646c0cdbaca076c8d3d0207891785b3379cbff",
+          "version": "0.3.1"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
