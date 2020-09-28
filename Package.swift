@@ -7,6 +7,9 @@ let package = Package(
     platforms: [
         .macOS(.v10_15)
     ],
+    products: [
+        .executable(name: "BlinkTool", targets: ["BlinkTool"])
+    ],
     dependencies: [
         .package(url: "https://github.com/grigorye/BlinkKit", .branch("master")),
         .package(url: "https://github.com/apple/swift-argument-parser", from: "0.0.5"),
