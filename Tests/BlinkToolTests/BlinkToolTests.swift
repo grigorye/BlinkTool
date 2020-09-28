@@ -27,7 +27,7 @@ final class BlinkToolTests: XCTestCase {
         let data = pipe.fileHandleForReading.readDataToEndOfFile()
         let output = String(data: data, encoding: .utf8)
         
-        XCTAssertEqual(output, "Hello, world!\n")
+        XCTAssertEqual(process.terminationStatus, 0, "\(output ?? "(null)")")
     }
     
     /// Returns path to the built products directory.
