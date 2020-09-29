@@ -1,13 +1,19 @@
 import Foundation
 import GETracing
 
-func track(
-    _ error: Error, file: StaticString = #file, line: Int = #line, column: UInt = #column,
+@discardableResult
+func track<T: Error>(
+    _ error: T,
+    file: StaticString = #file,
+    line: Int = #line,
+    column: UInt = #column,
+    function: StaticString = #function,
     dsohandle: UnsafeRawPointer = #dsohandle
-) {
+) -> T {
     traceAsNecessary(
-        error, file: file, line: line, column: column, function: "track",
+        error, file: file, line: line, column: column, function: function,
         moduleReference: .dso(dsohandle))
+    return error
 }
 
 func track<T: Codable>(
