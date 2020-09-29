@@ -25,6 +25,8 @@ func loadAuthenticatedAccount(tokenStorageURL: URL) -> AnyPublisher<Authenticate
             Result {
                 let data = try Data(contentsOf: tokenStorageURL)
                 return try JSONDecoder().decode(AuthenticatedAccount.self, from: data)
+            }.mapError { error in
+                track(error)
             }
         )
     }.eraseToAnyPublisher()
