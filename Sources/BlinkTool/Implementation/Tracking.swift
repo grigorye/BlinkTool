@@ -1,3 +1,4 @@
+import BlinkOpenAPI
 import Foundation
 import GETracing
 
@@ -10,9 +11,23 @@ func track<T: Error>(
     function: StaticString = #function,
     dsohandle: UnsafeRawPointer = #dsohandle
 ) -> T {
-    traceAsNecessary(
-        error, file: file, line: line, column: column, function: function,
-        moduleReference: .dso(dsohandle))
+    switch error {
+    case .error(let code, let data, let error) as ErrorResponse:
+        guard let data = data else {
+            fallthrough
+        }
+        guard let apiError = try? JSONDecoder().decode(ModelError.self, from: data) else {
+            fallthrough
+        }
+        let info = (description: error.localizedDescription, code: code, error: apiError, underlyingError: error)
+        traceAsNecessary(
+            info, file: file, line: line, column: column, function: function,
+            moduleReference: .dso(dsohandle))
+    default:
+        traceAsNecessary(
+            error, file: file, line: line, column: column, function: function,
+            moduleReference: .dso(dsohandle))
+    }
     return error
 }
 
