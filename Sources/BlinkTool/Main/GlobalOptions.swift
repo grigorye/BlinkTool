@@ -5,7 +5,7 @@ struct GlobalOptions: ParsableArguments {
     var email: String
     
     @Option(help: "Password")
-    var password: String
+    var password: String?
     
     @Option(name: .customLong("json"), help: "Enable JSON Output")
     var jsonOutput: JsonOutput?
