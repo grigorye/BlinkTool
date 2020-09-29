@@ -8,14 +8,14 @@ struct GetVideo: ParsableCommand {
         abstract: "Get video"
     )
     
-    @Option(help: "Media ID")
-    private var mediaID: Int
+    @Option(help: "Media Path")
+    private var media: String
     
     func run() throws {
         var cancellables = Set<AnyCancellable>()
         await { exit in
             BlinkController(globalOptions: globalOptions)
-                .getVideo(mediaID: mediaID)
+                .getVideo(media: media)
                 .awaitAndTrack(exit: exit, cancellables: &cancellables)
         }
     }
