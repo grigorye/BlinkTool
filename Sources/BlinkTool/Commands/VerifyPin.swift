@@ -11,10 +11,13 @@ struct VerifyPin: ParsableCommand {
     @Option(help: "Pin")
     private var pin: String
     
+    @Option(help: "Password")
+    private var password: String
+    
     func run() throws {
         var cancellables = Set<AnyCancellable>()
         await { exit in
-            BlinkController(globalOptions: globalOptions)
+            BlinkController(email: globalOptions.email, password: password)
                 .verifyPin(pin: pin)
                 .awaitAndTrack(exit: exit, cancellables: &cancellables)
         }
