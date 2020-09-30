@@ -21,6 +21,7 @@ struct BlinkTool: ParsableCommand {
             HomeScreen.self,
             GetCameraThumbnail.self,
             GetVideoEvents.self,
+            GetVideoEventsMedia.self,
             GetVideo.self,
             ToggleCamera.self,
         ]
