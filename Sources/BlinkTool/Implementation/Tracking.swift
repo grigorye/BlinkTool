@@ -37,7 +37,7 @@ func track<T: Codable>(
 ) {
     switch jsonOutput {
     case .none:
-        dump(value)
+        dump(trackable(value))
     case .pretty, .raw:
         let jsonEncoder = JSONEncoder()
         if jsonOutput == .pretty {
@@ -46,5 +46,14 @@ func track<T: Codable>(
         let data = try! jsonEncoder.encode(value)
         let string = String(data: data, encoding: .utf8)!
         print(string)
+    }
+}
+
+func trackable<T: Codable>(_ v: T) -> Codable {
+    switch v {
+    case let url as URL:
+        return url.path
+    default:
+        return v
     }
 }
