@@ -10,7 +10,7 @@ struct GetVideoEvents: BlinkCommand {
     )
     
     @Option(help: "Page")
-    private var page: Int
+    private var page: Int?
     
     @Option(name: .customLong("since"), help: "Since date")
     private var sinceDateString: String?
@@ -18,8 +18,16 @@ struct GetVideoEvents: BlinkCommand {
     func run() throws {
         var cancellables = Set<AnyCancellable>()
         await { exit in
-            BlinkController(globalOptions: globalOptions)
-                .videoEvents(page: page, since: sinceDate)
+            let blinkController = BlinkController(globalOptions: globalOptions)
+            let videoEventsForPage = { blinkController.videoEvents(page: $0, since: sinceDate) }
+            let queryMedia: AnyPublisher<[Media], Error> = {
+                if let page = page {
+                    return GetVideoEvents.queryMedia(page: page, videoEventsForPage: videoEventsForPage)
+                } else {
+                    return GetVideoEvents.queryMediaForAllPages(videoEventsForPage: videoEventsForPage)
+                }
+            }()
+            queryMedia
                 .awaitAndTrack(exit: exit, cancellables: &cancellables)
         }
     }
@@ -36,4 +44,28 @@ struct GetVideoEvents: BlinkCommand {
     }
     
     @OptionGroup var globalOptions: GlobalOptions
+}
+
+extension GetVideoEvents {
+    
+    static func queryMedia(
+        page: Int,
+        videoEventsForPage: @escaping (Int) -> AnyPublisher<VideoEvents, Error>
+    ) -> AnyPublisher<[Media], Error> {
+        videoEventsForPage(page)
+            .map(\.media)
+            .eraseToAnyPublisher()
+    }
+    
+    static func queryMediaForAllPages(
+        videoEventsForPage: @escaping (Int) -> AnyPublisher<VideoEvents, Error>
+    ) -> AnyPublisher<[Media], Error> {
+        (1...Int.max)
+            .publisher
+            .setFailureType(to: Error.self)
+            .flatMap(maxPublishers: .max(1), videoEventsForPage)
+            .map(\.media)
+            .prefix { $0.isEmpty != true }
+            .eraseToAnyPublisher()
+    }
 }
