@@ -6,7 +6,7 @@
         "repositoryURL": "https://github.com/grigorye/BlinkKit",
         "state": {
           "branch": "master",
-          "revision": "bf38b1969c8414a3353e6ee10bcab7630777bb17",
+          "revision": "9de7042ee1c939ba2f087708a1cad7f6e133e2ce",
           "version": null
         }
       },
@@ -15,7 +15,7 @@
         "repositoryURL": "https://github.com/grigorye/BlinkOpenAPI-Swift",
         "state": {
           "branch": "master",
-          "revision": "b86e4d5d7800565d82601f662156b0fb1954bc88",
+          "revision": "e8cdebcc6294b7871340ccfd444da5c1354e0e87",
           "version": null
         }
       },
@@ -24,8 +24,17 @@
         "repositoryURL": "https://github.com/grigorye/GETracing",
         "state": {
           "branch": "master",
-          "revision": "29dc7fb921802bc55f6c8e2cfc310c9c0b38f535",
+          "revision": "dcec96410d5e15edc79edfc5f1e7ec58aed81b7d",
           "version": null
+        }
+      },
+      {
+        "package": "OpenCombine",
+        "repositoryURL": "https://github.com/OpenCombine/OpenCombine.git",
+        "state": {
+          "branch": null,
+          "revision": "915a7efaf596058f9867ba76b08339740c47452e",
+          "version": "0.10.1"
         }
       },
       {
