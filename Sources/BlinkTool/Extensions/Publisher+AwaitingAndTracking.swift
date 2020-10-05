@@ -1,4 +1,8 @@
-import Combine
+#if !os(Linux)
+    import Combine
+#else
+    import OpenCombine
+#endif
 
 extension Publisher where Output: Codable {
     func awaitAndTrack(exit: @escaping () -> Void, cancellables: inout Set<AnyCancellable>) {

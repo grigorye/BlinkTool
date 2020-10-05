@@ -1,7 +1,12 @@
 import ArgumentParser
 import BlinkKit
-import Combine
 import Foundation
+
+#if !os(Linux)
+    import Combine
+#else
+    import OpenCombine
+#endif
 
 struct GetVideoEvents: BlinkCommand {
     

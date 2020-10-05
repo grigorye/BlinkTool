@@ -1,6 +1,11 @@
 import ArgumentParser
 import BlinkKit
-import Combine
+
+#if !os(Linux)
+    import Combine
+#else
+    import OpenCombine
+#endif
 
 struct ToggleCamera: ParsableCommand {
     

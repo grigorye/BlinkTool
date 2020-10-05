@@ -1,5 +1,10 @@
-import Darwin
 import Dispatch
+
+#if os(Linux)
+    import Glibc
+#else
+    import Darwin
+#endif
 
 func await(block: (_ exit: @escaping () -> Void) -> Void) {
     let dispatchGroup = DispatchGroup()
@@ -8,7 +13,7 @@ func await(block: (_ exit: @escaping () -> Void) -> Void) {
         dispatchGroup.leave()
     }
     dispatchGroup.notify(queue: DispatchQueue.main) {
-        Darwin.exit(EXIT_SUCCESS)
+        exit(EXIT_SUCCESS)
     }
     dispatchMain()
 }
