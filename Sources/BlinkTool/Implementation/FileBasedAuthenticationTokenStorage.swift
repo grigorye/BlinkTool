@@ -1,6 +1,12 @@
 import BlinkKit
-import Combine
 import Foundation
+import GETracing
+
+#if !os(Linux)
+    import Combine
+#else
+    import OpenCombine
+#endif
 
 struct FileBasedAuthenticationTokenStorage: AuthenticationTokenStorage {
     
@@ -38,14 +44,26 @@ func saveAuthenticatedAccount(newValue: AuthenticatedAccount?, tokenStorageURL: 
         let writeData = {
             try data.write(to: tokenStorageURL)
         }
-        do {
-            try writeData()
-        } catch CocoaError.fileNoSuchFile {
+        let writeDataAfterCreatingDirectory = {
             let fileManager = FileManager.default
             let tokenStorageParentDirectory = tokenStorageURL.deletingLastPathComponent()
             try fileManager.createDirectory(
                 at: tokenStorageParentDirectory, withIntermediateDirectories: true, attributes: nil)
             try writeData()
+        }
+        do {
+            try writeData()
+        } catch CocoaError.fileNoSuchFile {
+            try writeDataAfterCreatingDirectory()
+        } catch {
+            #if os(Linux)
+                let error = (error as NSError)
+                guard !(error.domain == NSCocoaErrorDomain && error.code == NSFileNoSuchFileError) else {
+                    try writeDataAfterCreatingDirectory()
+                    return
+                }
+            #endif
+            throw x$(error)
         }
     } else {
         try FileManager.default.removeItem(at: tokenStorageURL)
