@@ -1,7 +1,12 @@
 import ArgumentParser
 import BlinkKit
-import Combine
 import Foundation
+
+#if !os(Linux)
+    import Combine
+#else
+    import OpenCombine
+#endif
 
 protocol MediaStorage {
     func urlForMedia(_ media: Media) -> URL
@@ -76,7 +81,7 @@ extension GetVideoEventsMedia {
                 let mediaURL = urlForStoredMedia(media)
                 assert(mediaURL.isFileURL)
                 guard fileManager.fileExists(atPath: mediaURL.path) == false else {
-                    return Result.Publisher(mediaURL).eraseToAnyPublisher()
+                    return Result<URL, Error>.Publisher(mediaURL).eraseToAnyPublisher()
                 }
                 return getVideo(media.media)
                     .tryMap { response in
