@@ -3,9 +3,9 @@ import Foundation
 import GETracing
 
 #if !os(Linux)
-    import Combine
+import Combine
 #else
-    import OpenCombine
+import OpenCombine
 #endif
 
 struct FileBasedAuthenticationTokenStorage: AuthenticationTokenStorage {
@@ -57,11 +57,11 @@ func saveAuthenticatedAccount(newValue: AuthenticatedAccount?, tokenStorageURL: 
             try writeDataAfterCreatingDirectory()
         } catch {
             #if os(Linux)
-                let error = (error as NSError)
-                guard !(error.domain == NSCocoaErrorDomain && error.code == NSFileNoSuchFileError) else {
-                    try writeDataAfterCreatingDirectory()
-                    return
-                }
+            let error = (error as NSError)
+            guard !(error.domain == NSCocoaErrorDomain && error.code == NSFileNoSuchFileError) else {
+                try writeDataAfterCreatingDirectory()
+                return
+            }
             #endif
             throw x$(error)
         }

@@ -1,9 +1,9 @@
 import Dispatch
 
 #if os(Linux)
-    import Glibc
+import Glibc
 #else
-    import Darwin
+import Darwin
 #endif
 
 func await(block: (_ exit: @escaping () -> Void) -> Void) {

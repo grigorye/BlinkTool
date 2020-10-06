@@ -3,9 +3,9 @@ import BlinkKit
 import Foundation
 
 #if !os(Linux)
-    import Combine
+import Combine
 #else
-    import OpenCombine
+import OpenCombine
 #endif
 
 protocol MediaStorage {

@@ -1,7 +1,7 @@
 #if !os(Linux)
-    import Combine
+import Combine
 #else
-    import OpenCombine
+import OpenCombine
 #endif
 
 extension Publisher where Output: Codable {

@@ -2,9 +2,9 @@ import ArgumentParser
 import BlinkKit
 
 #if !os(Linux)
-    import Combine
+import Combine
 #else
-    import OpenCombine
+import OpenCombine
 #endif
 
 struct HomeScreen: BlinkCommand {
