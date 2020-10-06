@@ -1,5 +1,3 @@
-import BlinkOpenAPI
-import Foundation
 import GETracing
 
 traceEnabledEnforced = true
