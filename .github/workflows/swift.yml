@@ -25,11 +25,6 @@ jobs:
   linux: # Borrowed from https://github.com/NSHipster/SwiftSyntaxHighlighter/blob/master/.github/workflows/ci.yml
       runs-on: ubuntu-20.04
 
-      container:
-        image: swiftlang/swift:nightly
-        volumes:
-          - /lib/x86_64-linux-gnu:/lib-extras
-
       steps:
         - name: Checkout
           uses: actions/checkout@v1
@@ -40,6 +35,4 @@ jobs:
             restore-keys: |
               ${{ runner.os }}-spm-
         - name: Build
-          run: swift build -c release -Xswiftc -static-stdlib -Xlinker -lCoreFoundation -Xlinker -lCFURLSessionInterface -Xlinker -L -Xlinker /lib-extras
-        - name: Build and Test
-          run: swift test --enable-test-discovery
+          run: sudo docker run --rm -v $(pwd):/src -v /lib/x86_64-linux-gnu:/lib-extras swiftlang/swift:nightly swift build -c release --package-path /src -Xswiftc -static-stdlib -Xlinker -lCoreFoundation -Xlinker -lCFURLSessionInterface -Xlinker -L -Xlinker /lib-extras
