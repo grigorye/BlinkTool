@@ -23,10 +23,10 @@ jobs:
       run: swift test -v
   
   linux: # Borrowed from https://github.com/NSHipster/SwiftSyntaxHighlighter/blob/master/.github/workflows/ci.yml
-      runs-on: ubuntu-latest
+      runs-on: ubuntu-20.04
 
       container:
-        image: swift:5.3
+        image: swift:nightly
 
       steps:
         - name: Checkout
