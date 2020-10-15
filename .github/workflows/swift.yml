@@ -37,5 +37,7 @@ jobs:
             key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
             restore-keys: |
               ${{ runner.os }}-spm-
+        - name: Build
+          run: ./build-ubuntu-static
         - name: Build and Test
           run: swift test --enable-test-discovery
