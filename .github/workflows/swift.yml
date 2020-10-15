@@ -26,7 +26,7 @@ jobs:
       runs-on: ubuntu-20.04
 
       container:
-        image: swift:nightly
+        image: swiftlang/swift:nightly
 
       steps:
         - name: Checkout
