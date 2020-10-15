@@ -1,0 +1,12 @@
+#! /bin/bash
+
+set -x
+set -euo pipefail
+
+~/swift-DEVELOPMENT-SNAPSHOT-2020-10-07-a-ubuntu20.04/usr/bin/swift build \
+    -c release \
+    -Xswiftc -static-stdlib \
+    -Xlinker -lCoreFoundation \
+    -Xlinker -lCFURLSessionInterface \
+    -Xlinker -Bdynamic \
+    -Xlinker /usr/lib/x86_64-linux-gnu/libcurl.so.4.6.0
