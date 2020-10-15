@@ -40,6 +40,6 @@ jobs:
             restore-keys: |
               ${{ runner.os }}-spm-
         - name: Build
-          run: ./build-ubuntu-static
+          run: swift build -c release -Xswiftc -static-stdlib -Xlinker -lCoreFoundation -Xlinker -lCFURLSessionInterface -Xlinker -L -Xlinker /lib-extras
         - name: Build and Test
           run: swift test --enable-test-discovery
