@@ -36,5 +36,5 @@ jobs:
               ${{ runner.os }}-spm-
         - name: Build
           run: |
-            sudo apt install libcurl4-openssl-dev 
-            sudo docker run --rm -v $(pwd):/src -v /lib/x86_64-linux-gnu:/lib-extras swiftlang/swift:nightly swift build -c release --package-path /src -Xswiftc -static-stdlib -Xlinker -lCoreFoundation -Xlinker -lCFURLSessionInterface -Xlinker -L -Xlinker /lib-extras
+            apt install libcurl4-openssl-dev 
+            docker run --rm -v $(pwd):/src -v /lib/x86_64-linux-gnu:/lib-extras swiftlang/swift:nightly swift build -c release --package-path /src -Xswiftc -static-stdlib -Xlinker -lCoreFoundation -Xlinker -lCFURLSessionInterface -Xlinker -L -Xlinker /lib-extras
