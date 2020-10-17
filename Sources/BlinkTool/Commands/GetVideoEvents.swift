@@ -25,13 +25,7 @@ struct GetVideoEvents: BlinkCommand {
         await { exit in
             let blinkController = BlinkController(globalOptions: globalOptions)
             let videoEventsForPage = { blinkController.videoEvents(page: $0, since: sinceDate) }
-            let queryMedia: AnyPublisher<[Media], Error> = {
-                if let page = page {
-                    return GetVideoEvents.queryMedia(page: page, videoEventsForPage: videoEventsForPage)
-                } else {
-                    return GetVideoEvents.queryMediaForAllPages(videoEventsForPage: videoEventsForPage)
-                }
-            }()
+            let queryMedia = Self.queryMedia(page: page, videoEventsForPage: videoEventsForPage)
             queryMedia
                 .awaitAndTrack(exit: exit, cancellables: &cancellables)
         }
@@ -52,6 +46,17 @@ struct GetVideoEvents: BlinkCommand {
 }
 
 extension GetVideoEvents {
+    
+    static func queryMedia(
+        page: Int?,
+        videoEventsForPage: @escaping (Int) -> AnyPublisher<VideoEvents, Error>
+    ) -> AnyPublisher<[Media], Error> {
+        if let page = page {
+            return GetVideoEvents.queryMedia(page: page, videoEventsForPage: videoEventsForPage)
+        } else {
+            return GetVideoEvents.queryMediaForAllPages(videoEventsForPage: videoEventsForPage)
+        }
+    }
     
     static func queryMedia(
         page: Int,
