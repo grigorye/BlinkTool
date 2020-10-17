@@ -1,6 +1,7 @@
 import ArgumentParser
 import BlinkKit
 import Foundation
+import GETracing
 
 #if !os(Linux)
 import Combine
@@ -37,13 +38,16 @@ struct GetVideoEventsMedia: BlinkCommand {
             let mediaStorage: MediaStorage = defaultMediaStorage(rootURL: rootURL)
             let blinkController = BlinkController(globalOptions: globalOptions)
             let videoEventsForPage = { blinkController.videoEvents(page: $0, since: sinceDate) }
-            let queryMedia: AnyPublisher<[Media], Error> = {
-                if let page = page {
-                    return GetVideoEvents.queryMedia(page: page, videoEventsForPage: videoEventsForPage)
-                } else {
-                    return GetVideoEvents.queryMediaForAllPages(videoEventsForPage: videoEventsForPage)
+            let queryMedia = GetVideoEvents.queryMedia(page: page, videoEventsForPage: videoEventsForPage)
+                .map { (media: [Media]) -> [Media] in
+                    let uniqMedia = NSOrderedSet(array: media).array as! [Media]
+                    let duplicatesCount = uniqMedia.count - media.count
+                    if duplicatesCount > 0 {
+                        x$(duplicatesCount)
+                    }
+                    return uniqMedia
                 }
-            }()
+                .eraseToAnyPublisher()
             let getVideo = { blinkController.getVideo(media: $0) }
             let urlForStoredMedia = { mediaStorage.urlForMedia($0) }
             return Self.downloadMedia(queryMedia: queryMedia, getVideo: getVideo, urlForStoredMedia: urlForStoredMedia)
