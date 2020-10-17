@@ -11,13 +11,15 @@ enum ExitStatus {
 extension Publisher where Output: Codable {
     func awaitAndTrack(exit: @escaping (ExitStatus) -> Void, cancellables: inout Set<AnyCancellable>) {
         sink { (completion: Subscribers.Completion<Self.Failure>) in
-            if case .failure(let error) = completion {
+            switch completion {
+            case .failure(let error):
                 track(error)
                 exit(.failure)
+            case .finished:
+                exit(.success)
             }
         } receiveValue: { (value: Output) in
             track(value)
-            exit(.success)
         }
         .store(in: &cancellables)
     }
