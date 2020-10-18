@@ -1,0 +1,38 @@
+name: Linux
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+
+  release:
+    runs-on: ubuntu-latest
+    container:
+      image: grigorye/swift:nightly
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/cache@v2
+      with:
+        path: .build
+        key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
+        restore-keys: |
+          ${{ runner.os }}-spm-
+    - run: swift build -v -c release -Xswiftc -static-stdlib -Xlinker -lCoreFoundation -Xlinker -lCFURLSessionInterface
+  
+  test:
+    runs-on: ubuntu-latest
+    container:
+      image: swift
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/cache@v2
+      with:
+        path: .build
+        key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
+        restore-keys: |
+          ${{ runner.os }}-spm-
+    - run: swift test -v --enable-test-discovery
