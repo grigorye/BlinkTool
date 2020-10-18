@@ -24,7 +24,14 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-spm-
     - run: swift build -v -c release -Xswiftc -static-stdlib -Xlinker -lCoreFoundation -Xlinker -lCFURLSessionInterface
-  
+    - uses: actions/upload-artifact@v2
+      with:
+        name: BlinkTool
+        # `release` is a symlink, apply glob as a workaround for https://github.com/actions/upload-artifact/issues/92
+        path: |
+          .build/release*/BlinkTool
+          !.build/release?*
+
   test:
     runs-on: ubuntu-latest
     container:
