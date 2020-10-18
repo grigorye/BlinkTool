@@ -1,4 +1,5 @@
-[![Actions Status](https://github.com/grigorye/BlinkTool/workflows/Swift/badge.svg)](https://github.com/grigorye/BlinkTool/actions)
+![Linux](https://github.com/grigorye/BlinkTool/workflows/Linux/badge.svg)
+![macOS](https://github.com/grigorye/BlinkTool/workflows/macOS/badge.svg)
 
 # BlinkTool
 
