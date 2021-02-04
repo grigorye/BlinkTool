@@ -79,7 +79,7 @@ extension GetVideoEventsMedia {
     ) -> AnyPublisher<URL, Error> {
         queryMedia
             .flatMap { (media: [Media]) in
-                Publishers.Sequence(sequence: media)
+                Publishers.Sequence<[Media], Error>(sequence: media)
             }
             .flatMap { (media: Media) -> AnyPublisher<URL, Error> in
                 let mediaURL = urlForStoredMedia(media)
