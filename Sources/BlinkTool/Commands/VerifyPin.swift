@@ -22,7 +22,7 @@ struct VerifyPin: ParsableCommand {
     func run() throws {
         var cancellables = Set<AnyCancellable>()
         await { exit in
-            BlinkController(email: globalOptions.email, password: password)
+            BlinkController(email: globalOptions.email, password: password, reauth: globalOptions.reauth)
                 .verifyPin(pin: pin)
                 .awaitAndTrack(exit: exit, cancellables: &cancellables)
         }

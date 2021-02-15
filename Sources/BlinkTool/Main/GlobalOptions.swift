@@ -7,6 +7,9 @@ struct GlobalOptions: ParsableArguments {
     @Option(help: "Password")
     var password: String?
     
+    @Option(help: "Reauthenticate")
+    var reauth: Bool = true
+    
     @Option(name: .customLong("json"), help: "Enable JSON Output")
     var jsonOutput: JsonOutput?
 }
