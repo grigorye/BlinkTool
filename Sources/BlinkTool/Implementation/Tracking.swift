@@ -12,14 +12,14 @@ func track<T: Error>(
     dsohandle: UnsafeRawPointer = #dsohandle
 ) -> T {
     switch error {
-    case .error(let code, let data, let error) as ErrorResponse:
+    case .error(let code, let data, let response, let error) as ErrorResponse:
         guard let data = data else {
             fallthrough
         }
         guard let apiError = try? JSONDecoder().decode(ModelError.self, from: data) else {
             fallthrough
         }
-        let info = (description: error.localizedDescription, code: code, error: apiError, underlyingError: error)
+        let info = (description: error.localizedDescription, code: code, error: apiError, response: response, underlyingError: error)
         traceAsNecessary(
             info, file: file, line: line, column: column, function: function,
             moduleReference: .dso(dsohandle))
