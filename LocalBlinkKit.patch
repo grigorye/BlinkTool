@@ -1,0 +1,14 @@
+diff --git a/Package.swift b/Package.swift
+index ffe8a26efaaa7051c22afa3f63430f6b88c3f2e9..6073302f5cdeda5fd8719c6217e77bd7829b9a22 100644
+--- a/Package.swift
++++ b/Package.swift
+@@ -11,7 +11,8 @@ let package = Package(
+         .executable(name: "BlinkTool", targets: ["BlinkTool"])
+     ],
+     dependencies: [
+-        .package(url: "https://github.com/grigorye/BlinkKit", .branch("master")),
++        .package(path: "../BlinkKit"),
++        .package(name: "BlinkOpenAPI", path: "../BlinkOpenAPI-Swift"),
+         .package(url: "https://github.com/apple/swift-argument-parser", from: "0.0.5"),
+         .package(url: "https://github.com/OpenCombine/OpenCombine.git", from: "0.10.1"),
+     ],
