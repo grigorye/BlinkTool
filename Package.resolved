@@ -6,7 +6,7 @@
         "repositoryURL": "https://github.com/grigorye/BlinkKit",
         "state": {
           "branch": "master",
-          "revision": "8497236750e28a58c0822195260dc05f3608c622",
+          "revision": "6bca57a9888c250e7a6851653258c1558e6ef787",
           "version": null
         }
       },
@@ -15,7 +15,7 @@
         "repositoryURL": "https://github.com/grigorye/BlinkOpenAPI-Swift",
         "state": {
           "branch": null,
-          "revision": "c383caa4f43bd0ffdd4880d7f6ebfed7b0d107f8",
+          "revision": "90a72dacacc9556d659e68d50a791dd91f1801b1",
           "version": "0.0.2"
         }
       },
