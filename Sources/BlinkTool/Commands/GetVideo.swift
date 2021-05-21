@@ -18,7 +18,7 @@ struct GetVideo: ParsableCommand {
     
     func run() throws {
         var cancellables = Set<AnyCancellable>()
-        await { exit in
+        `await` { exit in
             BlinkController(globalOptions: globalOptions)
                 .getVideo(media: media)
                 .awaitAndTrack(exit: exit, cancellables: &cancellables)

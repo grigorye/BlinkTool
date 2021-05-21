@@ -22,7 +22,7 @@ struct GetCameraThumbnail: ParsableCommand {
     func run() throws {
         var cancellables = Set<AnyCancellable>()
         
-        await { exit in
+        `await` { exit in
             BlinkController(globalOptions: globalOptions)
                 .getCameraThumbnail(networkID: networkID, cameraID: cameraID)
                 .awaitAndTrack(exit: exit, cancellables: &cancellables)

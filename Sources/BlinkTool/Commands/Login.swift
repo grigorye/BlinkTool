@@ -15,7 +15,7 @@ struct Login: ParsableCommand {
     
     func run() throws {
         var cancellables = Set<AnyCancellable>()
-        await { exit in
+        `await` { exit in
             BlinkController(globalOptions: globalOptions)
                 .login()
                 .awaitAndTrack(exit: exit, cancellables: &cancellables)

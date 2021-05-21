@@ -22,7 +22,7 @@ struct GetVideoEvents: BlinkCommand {
     
     func run() throws {
         var cancellables = Set<AnyCancellable>()
-        await { exit in
+        `await` { exit in
             let blinkController = BlinkController(globalOptions: globalOptions)
             let videoEventsForPage = { blinkController.videoEvents(page: $0, since: sinceDate) }
             let queryMedia = Self.queryMedia(page: page, videoEventsForPage: videoEventsForPage)

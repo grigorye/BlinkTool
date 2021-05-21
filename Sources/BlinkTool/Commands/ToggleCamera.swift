@@ -24,7 +24,7 @@ struct ToggleCamera: ParsableCommand {
     
     func run() throws {
         var cancellables = Set<AnyCancellable>()
-        await { exit in
+        `await` { exit in
             BlinkController(globalOptions: globalOptions)
                 .toggleCamera(networkID: networkID, cameraID: cameraID, on: on == .on)
                 .awaitAndTrack(exit: exit, cancellables: &cancellables)

@@ -15,7 +15,7 @@ struct HomeScreen: BlinkCommand {
     
     func run() throws {
         var cancellables = Set<AnyCancellable>()
-        await { exit in
+        `await` { exit in
             BlinkController(globalOptions: globalOptions)
                 .homeScreen()
                 .awaitAndTrack(exit: exit, cancellables: &cancellables)
