@@ -2,11 +2,20 @@
   "object": {
     "pins": [
       {
+        "package": "AnyCodable",
+        "repositoryURL": "https://github.com/Flight-School/AnyCodable",
+        "state": {
+          "branch": null,
+          "revision": "b1a7a8a6186f2fcb28f7bda67cfc545de48b3c80",
+          "version": "0.6.2"
+        }
+      },
+      {
         "package": "BlinkKit",
         "repositoryURL": "https://github.com/grigorye/BlinkKit",
         "state": {
           "branch": "master",
-          "revision": "ba0bdbd882a058a2876f3fd43d462468d9cc6c72",
+          "revision": "7224badf471687b9444c102918e8eb553dc5ded0",
           "version": null
         }
       },
@@ -15,7 +24,7 @@
         "repositoryURL": "https://github.com/grigorye/BlinkOpenAPI-Swift",
         "state": {
           "branch": "master",
-          "revision": "90a72dacacc9556d659e68d50a791dd91f1801b1",
+          "revision": "0a315cfde4fb801f0e66ccca17ec805377c036ee",
           "version": null
         }
       },
@@ -24,7 +33,7 @@
         "repositoryURL": "https://github.com/grigorye/GETracing",
         "state": {
           "branch": "master",
-          "revision": "dcec96410d5e15edc79edfc5f1e7ec58aed81b7d",
+          "revision": "86ba1be97e0124475f1d36ff050ec94910abe5e2",
           "version": null
         }
       },
@@ -42,8 +51,8 @@
         "repositoryURL": "https://github.com/apple/swift-argument-parser",
         "state": {
           "branch": null,
-          "revision": "831ed5e860a70e745bc1337830af4786b2576881",
-          "version": "0.4.1"
+          "revision": "6b2aa2748a7881eebb9f84fb10c01293e15b52ca",
+          "version": "0.5.0"
         }
       }
     ]
