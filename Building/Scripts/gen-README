@@ -1,0 +1,26 @@
+#! /bin/bash
+
+set -x
+set -euo pipefail
+
+bn=$(basename "$0")
+wd=$(dirname "$0")
+
+tmpdir=$(mktemp -d /tmp/"$bn".XXXXXX)
+
+readmeTemplate="./Building/Templates/README-template.md"
+
+# Add preamble
+
+cat > README.md <<EOF
+[//]: # (DON'T MODIFY: This file is generated from template at "$readmeTemplate".)
+
+EOF
+
+# Expand the template
+
+usageMd="$tmpdir/usage.md"
+echo > "$usageMd" # Make sure extra empty line is there in the content on expansion.
+"$wd"/gen-Usage >> "$usageMd"
+
+sed "/(Usage.md)/ r $usageMd" < "$readmeTemplate" >> README.md
