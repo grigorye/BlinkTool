@@ -6,8 +6,8 @@
         "repositoryURL": "https://github.com/Flight-School/AnyCodable",
         "state": {
           "branch": null,
-          "revision": "b1a7a8a6186f2fcb28f7bda67cfc545de48b3c80",
-          "version": "0.6.2"
+          "revision": "f9fda69a7b704d46fb5123005f2f7e43dbb8a0fa",
+          "version": "0.6.5"
         }
       },
       {
@@ -15,7 +15,7 @@
         "repositoryURL": "https://github.com/grigorye/BlinkKit",
         "state": {
           "branch": "master",
-          "revision": "7de1296e379da022a76a12d9d8980493e674f251",
+          "revision": "6a8b4b25e1c62b9531e3b94783aac13c4029427e",
           "version": null
         }
       },
@@ -24,7 +24,7 @@
         "repositoryURL": "https://github.com/grigorye/BlinkOpenAPI-Swift",
         "state": {
           "branch": "master",
-          "revision": "45eb87ad3065487c1c714b7401e7ce205c0c9cd9",
+          "revision": "9bfd6ba44577655fe6d9055fe39d163226b9e958",
           "version": null
         }
       },
@@ -42,8 +42,8 @@
         "repositoryURL": "https://github.com/OpenCombine/OpenCombine.git",
         "state": {
           "branch": null,
-          "revision": "28993ae57de5a4ea7e164787636cafad442d568c",
-          "version": "0.12.0"
+          "revision": "9cf67e363738dbab61b47fb5eaed78d3db31e5ee",
+          "version": "0.13.0"
         }
       },
       {
