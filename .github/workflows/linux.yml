@@ -35,7 +35,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     container:
-      image: swift
+      image: swift:5.6-focal
     steps:
       - uses: actions/checkout@v2
       - uses: actions/cache@v2
