@@ -1,5 +1,9 @@
+.build
+.DerivedData
 .DS_Store
-/.build
-/Packages
-/*.xcodeproj
-xcuserdata/
+.swiftpm
+.vscode
+*.xccheckout
+*.xcuserdatad
+build
+DerivedData

@@ -15,6 +15,11 @@ jobs:
     container:
       image: swift:5.6-focal
     steps:
+      - if: ${{ env.ACT }}
+        name: Hack container for local development
+        run: |
+          apt-get update
+          apt-get install -y nodejs zstd
       - uses: actions/checkout@v2
       - uses: actions/cache@v2
         with:
@@ -37,6 +42,11 @@ jobs:
     container:
       image: swift:5.6-focal
     steps:
+      - if: ${{ env.ACT }}
+        name: Hack container for local development
+        run: |
+          apt-get update
+          apt-get install -y nodejs zstd
       - uses: actions/checkout@v2
       - uses: actions/cache@v2
         with:
