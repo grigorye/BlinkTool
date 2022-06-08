@@ -24,6 +24,7 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-spm-
     - run: swift build -v -c release -Xswiftc -static-stdlib -Xlinker -lCoreFoundation -Xlinker -lCFURLSessionInterface
+    - run: chmod -R go+rx .build
     - uses: actions/upload-artifact@v2
       with:
         name: BlinkTool
@@ -45,3 +46,4 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-spm-
     - run: swift test -v --enable-test-discovery
+    - run: chmod -R go+rx .build
