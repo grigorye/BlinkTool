@@ -13,7 +13,7 @@ jobs:
   release:
     runs-on: ubuntu-latest
     container:
-      image: swift:5.6-focal
+      image: swift:5.7.1-focal
     steps:
       - if: ${{ env.ACT }}
         name: Hack container for local development
@@ -40,7 +40,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     container:
-      image: swift:5.6-focal
+      image: swift:5.7.1-focal
     steps:
       - if: ${{ env.ACT }}
         name: Hack container for local development
