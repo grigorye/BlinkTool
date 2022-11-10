@@ -16,8 +16,8 @@ jobs:
     - uses: maxim-lobanov/setup-xcode@v1.5.1
       with:
         xcode-version: latest-stable
-    - uses: actions/checkout@v2
-    - uses: actions/cache@v2
+    - uses: actions/checkout@v3
+    - uses: actions/cache@v3
       with:
         path: .build
         key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
@@ -31,8 +31,8 @@ jobs:
     - uses: maxim-lobanov/setup-xcode@v1.5.1
       with:
         xcode-version: latest-stable
-    - uses: actions/checkout@v2
-    - uses: actions/cache@v2
+    - uses: actions/checkout@v3
+    - uses: actions/cache@v3
       with:
         path: .build
         key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
