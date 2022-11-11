@@ -1,13 +1,7 @@
 import ArgumentParser
 import BlinkKit
 
-#if !os(Linux)
-import Combine
-#else
-import OpenCombine
-#endif
-
-struct GetVideo: ParsableCommand {
+struct GetVideo: BlinkCommand {
     
     public static let configuration = CommandConfiguration(
         abstract: "Get video"
@@ -16,14 +10,11 @@ struct GetVideo: ParsableCommand {
     @Option(help: "Media Path")
     private var media: String
     
-    func run() throws {
-        var cancellables = Set<AnyCancellable>()
-        `await` { exit in
-            BlinkController(globalOptions: globalOptions)
-                .getVideo(media: media)
-                .awaitAndTrack(exit: exit, cancellables: &cancellables)
+    func run() async throws {
+        try await track {
+            try await blinkController().getVideo(media: media)
         }
     }
     
-    @OptionGroup private var globalOptions: GlobalOptions
+    @OptionGroup var globalOptions: GlobalOptions
 }

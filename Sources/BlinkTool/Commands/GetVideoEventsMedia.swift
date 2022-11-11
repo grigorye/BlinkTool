@@ -3,12 +3,6 @@ import BlinkKit
 import Foundation
 import GETracing
 
-#if !os(Linux)
-import Combine
-#else
-import OpenCombine
-#endif
-
 protocol MediaStorage {
     func urlForMedia(_ media: Media) -> URL
 }
@@ -35,35 +29,39 @@ struct GetVideoEventsMedia: BlinkCommand {
         destinationPath.flatMap { URL(fileURLWithPath: $0) } ?? defaultMediaStorageRootURL()
     }
     
-    func run() throws {
-        var cancellables = Set<AnyCancellable>()
-        `await` { exit in
+    func run() async throws {
+        do {
             let mediaStorage: MediaStorage = defaultMediaStorage(rootURL: rootURL)
-            let blinkController = BlinkController(globalOptions: globalOptions)
-            let videoEventsForPage = { blinkController.videoEvents(page: $0, since: sinceDate) }
-            let queryMedia = GetVideoEvents.queryMedia(page: page, videoEventsForPage: videoEventsForPage)
-                .map { (media: [Media]) -> [Media] in
-                    let uniqMedia = NSOrderedSet(array: media).array as! [Media]
-                    let duplicatesCount = uniqMedia.count - media.count
-                    if duplicatesCount > 0 {
-                        x$(duplicatesCount)
-                    }
-                    return uniqMedia
+            let blinkController = try await blinkController()
+            let videoEventsForPage = { try await blinkController.videoEvents(page: $0, since: sinceDate) }
+            let queryMedia: () async throws -> [Media] = {
+                let media = try await GetVideoEvents.queryMedia(page: page, videoEventsForPage: videoEventsForPage)
+                let uniqMedia = NSOrderedSet(array: media).array as! [Media]
+                let duplicatesCount = uniqMedia.count - media.count
+                if duplicatesCount > 0 {
+                    x$(duplicatesCount)
                 }
-                .eraseToAnyPublisher()
-            let getVideo = { blinkController.getVideo(media: $0) }
-            let urlForStoredMedia = { mediaStorage.urlForMedia($0) }
-            let downloadMedia = { Self.downloadMedia(getVideo: getVideo, media: $0, mediaURL: $1) }
-            let queryMediaForDownload = {
-                Self
-                    .queryMediaForDownload(queryMedia: queryMedia, urlForStoredMedia: urlForStoredMedia)
+                return uniqMedia
             }
-            return queryMediaForDownload()
-                .flatMap(
-                    maxPublishers: maxDownloads.flatMap { .max($0) } ?? .unlimited,
-                    downloadMedia
-                )
-                .awaitAndTrack(exit: exit, cancellables: &cancellables)
+            
+            let getVideo = { try await blinkController.getVideo(media: $0) }
+            let urlForStoredMedia = { mediaStorage.urlForMedia($0) }
+            let mediaForDownload = try await Self.queryMediaForDownload(queryMedia: queryMedia, urlForStoredMedia: urlForStoredMedia)
+            
+            let semaphore = Semaphore(count: maxDownloads ?? .max)
+            
+            try await withThrowingTaskGroup(of: URL.self) { group in
+                for media in mediaForDownload {
+                    group.addTask {
+                        try await semaphore.do {
+                            try await Self.downloadMedia(getVideo: getVideo, media: media.media, mediaURL: x$(media.mediaURL))
+                        }
+                    }
+                }
+                try await track {
+                    group
+                }
+            }
         }
     }
     
@@ -84,38 +82,31 @@ struct GetVideoEventsMedia: BlinkCommand {
 extension GetVideoEventsMedia {
     
     static func downloadMedia(
-        getVideo: @escaping (String) -> AnyPublisher<VideoResponse, Error>,
+        getVideo: @escaping (String) async throws -> VideoResponse,
         media: String,
         mediaURL: URL,
         fileManager: FileManager = .default
-    ) -> AnyPublisher<URL, Error> {
-        getVideo(media)
-            .tryMap { response -> URL in
-                let mediaDirectoryURL = mediaURL.deletingLastPathComponent()
-                try fileManager.createDirectory(at: mediaDirectoryURL, withIntermediateDirectories: true, attributes: nil)
-                try fileManager.moveItem(at: response.url, to: mediaURL)
-                return mediaURL
-            }
-            .eraseToAnyPublisher()
+    ) async throws -> URL {
+        let response = try await getVideo(media)
+        let mediaDirectoryURL = mediaURL.deletingLastPathComponent()
+        try fileManager.createDirectory(at: mediaDirectoryURL, withIntermediateDirectories: true, attributes: nil)
+        try fileManager.moveItem(at: response.url, to: mediaURL)
+        return mediaURL
     }
     
     static func queryMediaForDownload(
-        queryMedia: AnyPublisher<[Media], Error>,
+        queryMedia: () async throws -> [Media],
         urlForStoredMedia: @escaping (Media) -> URL,
         fileManager: FileManager = FileManager.default
-    ) -> AnyPublisher<(media: String, mediaURL: URL), Error> {
-        queryMedia
-            .flatMap { (media: [Media]) in
-                Publishers.Sequence<[Media], Error>(sequence: media)
+    ) async throws -> [(media: String, mediaURL: URL)] {
+        let media = try await queryMedia()
+        return media.compactMap { media in
+            let mediaURL = urlForStoredMedia(media)
+            assert(mediaURL.isFileURL)
+            guard fileManager.fileExists(atPath: mediaURL.path) == false else {
+                return nil
             }
-            .compactMap { (media: Media) in
-                let mediaURL = urlForStoredMedia(media)
-                assert(mediaURL.isFileURL)
-                guard fileManager.fileExists(atPath: mediaURL.path) == false else {
-                    return nil
-                }
-                return (media: media.media, mediaURL: mediaURL)
-            }
-            .eraseToAnyPublisher()
+            return (media: media.media, mediaURL: mediaURL)
+        }
     }
 }

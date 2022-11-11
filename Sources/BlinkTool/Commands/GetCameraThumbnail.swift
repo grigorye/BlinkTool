@@ -1,13 +1,7 @@
 import ArgumentParser
 import BlinkKit
 
-#if !os(Linux)
-import Combine
-#else
-import OpenCombine
-#endif
-
-struct GetCameraThumbnail: ParsableCommand {
+struct GetCameraThumbnail: BlinkCommand {
     
     public static let configuration = CommandConfiguration(
         abstract: "Download Camera Thumbnail"
@@ -19,13 +13,9 @@ struct GetCameraThumbnail: ParsableCommand {
     @Option(help: "Camera ID")
     private var cameraID: Int
     
-    func run() throws {
-        var cancellables = Set<AnyCancellable>()
-        
-        `await` { exit in
-            BlinkController(globalOptions: globalOptions)
-                .getCameraThumbnail(networkID: networkID, cameraID: cameraID)
-                .awaitAndTrack(exit: exit, cancellables: &cancellables)
+    func run() async throws {
+        try await track {
+            try await blinkController().getCameraThumbnail(networkID: networkID, cameraID: cameraID)
         }
     }
     

@@ -2,12 +2,6 @@ import ArgumentParser
 import BlinkKit
 import Foundation
 
-#if !os(Linux)
-import Combine
-#else
-import OpenCombine
-#endif
-
 struct GetVideoEvents: BlinkCommand {
     
     public static let configuration = CommandConfiguration(
@@ -20,14 +14,10 @@ struct GetVideoEvents: BlinkCommand {
     @Option(name: .customLong("since"), help: "Since date")
     private var sinceDateString: String?
     
-    func run() throws {
-        var cancellables = Set<AnyCancellable>()
-        `await` { exit in
-            let blinkController = BlinkController(globalOptions: globalOptions)
-            let videoEventsForPage = { blinkController.videoEvents(page: $0, since: sinceDate) }
-            let queryMedia = Self.queryMedia(page: page, videoEventsForPage: videoEventsForPage)
-            queryMedia
-                .awaitAndTrack(exit: exit, cancellables: &cancellables)
+    func run() async throws {
+        try await track {
+            let videoEventsForPage = { try await blinkController().videoEvents(page: $0, since: sinceDate) }
+            return try await Self.queryMedia(page: page, videoEventsForPage: videoEventsForPage)
         }
     }
     
@@ -49,33 +39,33 @@ extension GetVideoEvents {
     
     static func queryMedia(
         page: Int?,
-        videoEventsForPage: @escaping (Int) -> AnyPublisher<VideoEvents, Error>
-    ) -> AnyPublisher<[Media], Error> {
+        videoEventsForPage: @escaping (Int) async throws -> VideoEvents
+    ) async throws -> [Media] {
         if let page = page {
-            return GetVideoEvents.queryMedia(page: page, videoEventsForPage: videoEventsForPage)
+            return try await GetVideoEvents.queryMedia(page: page, videoEventsForPage: videoEventsForPage)
         } else {
-            return GetVideoEvents.queryMediaForAllPages(videoEventsForPage: videoEventsForPage)
+            return try await GetVideoEvents.queryMediaForAllPages(videoEventsForPage: videoEventsForPage)
         }
     }
     
     static func queryMedia(
         page: Int,
-        videoEventsForPage: @escaping (Int) -> AnyPublisher<VideoEvents, Error>
-    ) -> AnyPublisher<[Media], Error> {
-        videoEventsForPage(page)
-            .map(\.media)
-            .eraseToAnyPublisher()
+        videoEventsForPage: @escaping (Int) async throws -> VideoEvents
+    ) async throws -> [Media] {
+        try await videoEventsForPage(page).media
     }
     
     static func queryMediaForAllPages(
-        videoEventsForPage: @escaping (Int) -> AnyPublisher<VideoEvents, Error>
-    ) -> AnyPublisher<[Media], Error> {
-        (1...Int.max)
-            .publisher
-            .setFailureType(to: Error.self)
-            .flatMap(maxPublishers: .max(1), videoEventsForPage)
-            .map(\.media)
-            .prefix { $0.isEmpty != true }
-            .eraseToAnyPublisher()
+        videoEventsForPage: @escaping (Int) async throws -> VideoEvents
+    ) async throws -> [Media] {
+        var media: [Media] = []
+        for page in 1...Int.max {
+            let pageMedia = try await videoEventsForPage(page).media
+            if pageMedia.isEmpty {
+                return media
+            }
+            media += pageMedia
+        }
+        return media
     }
 }

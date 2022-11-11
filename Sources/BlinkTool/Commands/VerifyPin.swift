@@ -1,13 +1,7 @@
 import ArgumentParser
 import BlinkKit
 
-#if !os(Linux)
-import Combine
-#else
-import OpenCombine
-#endif
-
-struct VerifyPin: ParsableCommand {
+struct VerifyPin: AsyncParsableCommand {
     
     public static let configuration = CommandConfiguration(
         abstract: "Verify PIN"
@@ -19,12 +13,10 @@ struct VerifyPin: ParsableCommand {
     @Option(help: "Password")
     private var password: String
     
-    func run() throws {
-        var cancellables = Set<AnyCancellable>()
-        `await` { exit in
-            BlinkController(email: globalOptions.email, password: password, reauth: globalOptions.reauth)
+    func run() async throws {
+        try await track {
+            try await BlinkAuthenticator(email: globalOptions.email, password: password, reauth: globalOptions.reauth)
                 .verifyPin(pin: pin)
-                .awaitAndTrack(exit: exit, cancellables: &cancellables)
         }
     }
     
