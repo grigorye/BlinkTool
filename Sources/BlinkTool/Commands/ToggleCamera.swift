@@ -1,13 +1,7 @@
 import ArgumentParser
 import BlinkKit
 
-#if !os(Linux)
-import Combine
-#else
-import OpenCombine
-#endif
-
-struct ToggleCamera: ParsableCommand {
+struct ToggleCamera: BlinkCommand {
     
     public static let configuration = CommandConfiguration(
         abstract: "Toggle camera"
@@ -22,12 +16,9 @@ struct ToggleCamera: ParsableCommand {
     @Flag(help: "On/Off")
     private var on: OnOff
     
-    func run() throws {
-        var cancellables = Set<AnyCancellable>()
-        `await` { exit in
-            BlinkController(globalOptions: globalOptions)
-                .toggleCamera(networkID: networkID, cameraID: cameraID, on: on == .on)
-                .awaitAndTrack(exit: exit, cancellables: &cancellables)
+    func run() async throws {
+        try await track {
+            try await blinkController().toggleCamera(networkID: networkID, cameraID: cameraID, on: on == .on)
         }
     }
     

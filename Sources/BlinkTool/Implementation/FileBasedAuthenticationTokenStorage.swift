@@ -2,12 +2,6 @@ import BlinkKit
 import Foundation
 import GETracing
 
-#if !os(Linux)
-import Combine
-#else
-import OpenCombine
-#endif
-
 struct FileBasedAuthenticationTokenStorage: AuthenticationTokenStorage {
     
     let tokenStorageURL: URL
@@ -16,8 +10,8 @@ struct FileBasedAuthenticationTokenStorage: AuthenticationTokenStorage {
         try saveAuthenticatedAccount(newValue: authenticatedAccount, tokenStorageURL: tokenStorageURL)
     }
     
-    var load: AnyPublisher<AuthenticatedAccount?, Error> {
-        loadAuthenticatedAccount(tokenStorageURL: tokenStorageURL)
+    func load() async throws -> AuthenticatedAccount? {
+        try await loadAuthenticatedAccount(tokenStorageURL: tokenStorageURL)
     }
 }
 
@@ -25,17 +19,17 @@ func fileBasedTokenStorageURL(storageDirectory: URL, email: String) -> URL {
     storageDirectory.appendingPathComponent(email)
 }
 
-func loadAuthenticatedAccount(tokenStorageURL: URL) -> AnyPublisher<AuthenticatedAccount?, Error> {
-    Future { promise in
-        promise(
-            Result {
-                let data = try Data(contentsOf: tokenStorageURL)
-                return try JSONDecoder().decode(AuthenticatedAccount.self, from: data)
-            }.mapError { error in
-                track(error)
-            }
-        )
-    }.eraseToAnyPublisher()
+func loadAuthenticatedAccount(tokenStorageURL: URL) async throws -> AuthenticatedAccount? {
+    let task = Task {
+        do {
+            let data = try Data(contentsOf: tokenStorageURL)
+            return try JSONDecoder().decode(AuthenticatedAccount.self, from: data)
+        } catch {
+            track(error)
+            throw error
+        }
+    }
+    return try await task.value
 }
 
 func saveAuthenticatedAccount(newValue: AuthenticatedAccount?, tokenStorageURL: URL) throws {

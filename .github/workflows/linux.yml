@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - master
-      - 'feature/*'
   pull_request:
     branches: [master]
   workflow_dispatch:
@@ -13,15 +12,15 @@ jobs:
   release:
     runs-on: ubuntu-latest
     container:
-      image: swift:5.6-focal
+      image: swift:5.7.1-focal
     steps:
       - if: ${{ env.ACT }}
         name: Hack container for local development
         run: |
           apt-get update
           apt-get install -y nodejs zstd
-      - uses: actions/checkout@v2
-      - uses: actions/cache@v2
+      - uses: actions/checkout@v3
+      - uses: actions/cache@v3
         with:
           path: .build
           key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
@@ -29,7 +28,7 @@ jobs:
             ${{ runner.os }}-spm-
       - run: swift build -v -c release -Xswiftc -static-stdlib -Xlinker -lCoreFoundation -Xlinker -lCFURLSessionInterface
       - run: chmod -R go+rx .build
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: BlinkTool
           # `release` is a symlink, apply glob as a workaround for https://github.com/actions/upload-artifact/issues/92
@@ -40,15 +39,15 @@ jobs:
   test:
     runs-on: ubuntu-latest
     container:
-      image: swift:5.6-focal
+      image: swift:5.7.1-focal
     steps:
       - if: ${{ env.ACT }}
         name: Hack container for local development
         run: |
           apt-get update
           apt-get install -y nodejs zstd
-      - uses: actions/checkout@v2
-      - uses: actions/cache@v2
+      - uses: actions/checkout@v3
+      - uses: actions/cache@v3
         with:
           path: .build
           key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}

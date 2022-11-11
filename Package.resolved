@@ -1,61 +1,50 @@
 {
-  "object": {
-    "pins": [
-      {
-        "package": "AnyCodable",
-        "repositoryURL": "https://github.com/Flight-School/AnyCodable",
-        "state": {
-          "branch": null,
-          "revision": "f9fda69a7b704d46fb5123005f2f7e43dbb8a0fa",
-          "version": "0.6.5"
-        }
-      },
-      {
-        "package": "BlinkKit",
-        "repositoryURL": "https://github.com/grigorye/BlinkKit",
-        "state": {
-          "branch": "master",
-          "revision": "23e2db6edccdba39f6fef64077b4842afdf7f3c0",
-          "version": null
-        }
-      },
-      {
-        "package": "BlinkOpenAPI",
-        "repositoryURL": "https://github.com/grigorye/BlinkOpenAPI-Swift",
-        "state": {
-          "branch": "master",
-          "revision": "9bfd6ba44577655fe6d9055fe39d163226b9e958",
-          "version": null
-        }
-      },
-      {
-        "package": "GETracing",
-        "repositoryURL": "https://github.com/grigorye/GETracing",
-        "state": {
-          "branch": "master",
-          "revision": "86ba1be97e0124475f1d36ff050ec94910abe5e2",
-          "version": null
-        }
-      },
-      {
-        "package": "OpenCombine",
-        "repositoryURL": "https://github.com/OpenCombine/OpenCombine.git",
-        "state": {
-          "branch": null,
-          "revision": "9cf67e363738dbab61b47fb5eaed78d3db31e5ee",
-          "version": "0.13.0"
-        }
-      },
-      {
-        "package": "swift-argument-parser",
-        "repositoryURL": "https://github.com/apple/swift-argument-parser",
-        "state": {
-          "branch": null,
-          "revision": "6b2aa2748a7881eebb9f84fb10c01293e15b52ca",
-          "version": "0.5.0"
-        }
+  "pins" : [
+    {
+      "identity" : "anycodable",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Flight-School/AnyCodable",
+      "state" : {
+        "revision" : "862808b2070cd908cb04f9aafe7de83d35f81b05",
+        "version" : "0.6.7"
       }
-    ]
-  },
-  "version": 1
+    },
+    {
+      "identity" : "blinkkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/grigorye/BlinkKit",
+      "state" : {
+        "branch" : "main",
+        "revision" : "9cb90fc096feb05691c852e802901c4e1729024f"
+      }
+    },
+    {
+      "identity" : "blinkopenapi-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/grigorye/BlinkOpenAPI-Swift",
+      "state" : {
+        "branch" : "main",
+        "revision" : "28bc3286484223dcde967eb09f22d3ac4518c1be"
+      }
+    },
+    {
+      "identity" : "getracing",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/grigorye/GETracing",
+      "state" : {
+        "branch" : "master",
+        "revision" : "86ba1be97e0124475f1d36ff050ec94910abe5e2"
+      }
+    },
+    {
+      "identity" : "swift-argument-parser",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-argument-parser",
+      "state" : {
+        "revision" : "fddd1c00396eed152c45a46bea9f47b98e59301d",
+        "version" : "1.2.0"
+      }
+    }
+  ],
+  "version" : 2
 }

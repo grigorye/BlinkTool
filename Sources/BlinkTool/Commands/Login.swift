@@ -1,24 +1,16 @@
 import ArgumentParser
 import BlinkKit
 
-#if !os(Linux)
-import Combine
-#else
-import OpenCombine
-#endif
-
-struct Login: ParsableCommand {
+struct Login: AsyncParsableCommand {
     
     public static let configuration = CommandConfiguration(
         abstract: "Login into account"
     )
     
-    func run() throws {
-        var cancellables = Set<AnyCancellable>()
-        `await` { exit in
-            BlinkController(globalOptions: globalOptions)
+    func run() async throws {
+        try await track {
+            try await BlinkAuthenticator(globalOptions: globalOptions)
                 .login()
-                .awaitAndTrack(exit: exit, cancellables: &cancellables)
         }
     }
     

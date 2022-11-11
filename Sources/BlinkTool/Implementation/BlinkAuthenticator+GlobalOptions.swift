@@ -1,6 +1,6 @@
 import BlinkKit
 
-extension BlinkController {
+extension BlinkAuthenticator {
     
     init(globalOptions: GlobalOptions) {
         let email = globalOptions.email
@@ -8,7 +8,9 @@ extension BlinkController {
         let reauth = globalOptions.reauth
         self.init(email: email, password: password, reauth: reauth)
     }
-    
+}
+
+extension BlinkAuthenticator {
     init(email: String, password: String?, reauth: Bool) {
         let authenticationTokenStorage = defaultAuthenticationTokenStorage(email: email)
         self.init(email: email, password: password, reauth: reauth, authenticationTokenStorage: authenticationTokenStorage)
