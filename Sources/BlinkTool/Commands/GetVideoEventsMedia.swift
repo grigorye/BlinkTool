@@ -35,13 +35,7 @@ struct GetVideoEventsMedia: BlinkCommand {
             let blinkController = try await blinkController()
             let videoEventsForPage = { try await blinkController.videoEvents(page: $0, since: sinceDate) }
             let queryMedia: () async throws -> [Media] = {
-                let media = try await GetVideoEvents.queryMedia(page: page, videoEventsForPage: videoEventsForPage)
-                let uniqMedia = NSOrderedSet(array: media).array as! [Media]
-                let duplicatesCount = uniqMedia.count - media.count
-                if duplicatesCount > 0 {
-                    x$(duplicatesCount)
-                }
-                return uniqMedia
+                try await GetVideoEvents.queryMedia(page: page, videoEventsForPage: videoEventsForPage)
             }
             
             let getVideo = { try await blinkController.getVideo(media: $0) }
@@ -54,7 +48,7 @@ struct GetVideoEventsMedia: BlinkCommand {
                 for media in mediaForDownload {
                     group.addTask {
                         try await semaphore.do {
-                            try await Self.downloadMedia(getVideo: getVideo, media: media.media, mediaURL: x$(media.mediaURL))
+                            try await Self.downloadMedia(getVideo: getVideo, media: media.media, mediaURL: media.mediaURL)
                         }
                     }
                 }

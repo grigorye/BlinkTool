@@ -1,4 +1,4 @@
-func track<T: Codable>(body: () async throws -> T) async throws {
+func track<T: Codable>(body: () async throws -> T) async rethrows {
     do {
         let value = try await body()
         track(value)
@@ -8,7 +8,7 @@ func track<T: Codable>(body: () async throws -> T) async throws {
     }
 }
 
-func track<T: Codable>(body: @autoclosure () async throws -> T) async throws {
+func track<T: Codable>(body: @autoclosure () async throws -> T) async rethrows {
     do {
         let value = try await body()
         track(value)
@@ -18,7 +18,7 @@ func track<T: Codable>(body: @autoclosure () async throws -> T) async throws {
     }
 }
 
-func track<T>(body: () async throws -> T) async throws where T: AsyncSequence, T.Element: Codable {
+func track<T>(body: () async throws -> T) async rethrows where T: AsyncSequence, T.Element: Codable {
     do {
         for try await i in try await body() {
             track(i)
