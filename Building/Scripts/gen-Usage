@@ -17,7 +17,7 @@ $(BlinkTool help)
 EOF
 
 # shellcheck disable=SC2207
-commands=($(BlinkTool help | gsed -n '/^SUBCOMMANDS:/,/^$/{p;/^$/q}' | tail +2 | tail -r | tail +2 | cut -f 3 -d ' '))
+commands=($(BlinkTool help | gsed -n '/^SUBCOMMANDS:/,/^$/{p;/^$/q}' | tail +2 | tail -r | tail +2 | tail -r | cut -f 3 -d ' '))
 
 for i in "${commands[@]}"; do
     cat <<EOF
