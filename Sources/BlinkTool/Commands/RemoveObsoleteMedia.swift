@@ -10,7 +10,7 @@ protocol ExistingMediaStorage {
 struct RemoveObsoleteMedia: BlinkCommand {
     
     public static let configuration = CommandConfiguration(
-        abstract: "Get media for video events"
+        abstract: "Remove media that is no longer available remotely."
     )
     
     @Option(name: .customLong("destination"), help: "Root")
