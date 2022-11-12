@@ -1,5 +1,8 @@
 #! /bin/bash
 
+BlinkTool() {
+    swift run BlinkTool "$@"
+}
 
 cat <<EOF
 ## Usage
