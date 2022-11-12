@@ -32,11 +32,28 @@ SUBCOMMANDS:
   get-video-events-media  Get media for video events
   get-video               Get video
   toggle-camera           Toggle camera
+  remove-obsolete-media   Get media for video events
 
   See 'blink-tool help <subcommand>' for detailed help.
 ```
 
 ## Commands
+### remove-obsolete-media
+
+```
+OVERVIEW: Get media for video events
+
+USAGE: blink-tool remove-obsolete-media [--destination <destination>] --email <email> [--password <password>] [--reauth <reauth>] [--json <json>]
+
+OPTIONS:
+  --destination <destination>
+                          Root
+  --email <email>         E-mail
+  --password <password>   Password
+  --reauth <reauth>       Reauthenticate (default: true)
+  --json <json>           Enable JSON Output
+  -h, --help              Show help information.
+```
 ### toggle-camera
 
 ```
@@ -142,11 +159,10 @@ OPTIONS:
 ```
 OVERVIEW: Verify PIN
 
-USAGE: blink-tool verify-pin --pin <pin> --password <password> --email <email> [--password <password>] [--reauth <reauth>] [--json <json>]
+USAGE: blink-tool verify-pin --pin <pin> --email <email> [--password <password>] [--reauth <reauth>] [--json <json>]
 
 OPTIONS:
   --pin <pin>             Pin
-  --password <password>   Password
   --email <email>         E-mail
   --password <password>   Password
   --reauth <reauth>       Reauthenticate (default: true)
