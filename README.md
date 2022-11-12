@@ -32,7 +32,7 @@ SUBCOMMANDS:
   get-video-events-media  Get media for video events
   get-video               Get video
   toggle-camera           Toggle camera
-  remove-obsolete-media   Get media for video events
+  remove-obsolete-media   Remove media that is no longer available remotely.
 
   See 'blink-tool help <subcommand>' for detailed help.
 ```
@@ -41,7 +41,7 @@ SUBCOMMANDS:
 ### remove-obsolete-media
 
 ```
-OVERVIEW: Get media for video events
+OVERVIEW: Remove media that is no longer available remotely.
 
 USAGE: blink-tool remove-obsolete-media [--destination <destination>] --email <email> [--password <password>] [--reauth <reauth>] [--json <json>]
 
