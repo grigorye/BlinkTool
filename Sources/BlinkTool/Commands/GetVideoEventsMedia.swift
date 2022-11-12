@@ -48,7 +48,7 @@ struct GetVideoEventsMedia: BlinkCommand {
                 for media in mediaForDownload {
                     group.addTask {
                         try await semaphore.do {
-                            try await Self.downloadMedia(getVideo: getVideo, media: media.media, mediaURL: x$(media.mediaURL))
+                            try await Self.downloadMedia(getVideo: getVideo, media: media.media, mediaURL: media.mediaURL)
                         }
                     }
                 }
