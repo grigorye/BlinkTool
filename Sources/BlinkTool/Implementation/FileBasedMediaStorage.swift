@@ -6,6 +6,6 @@ func defaultMediaStorageRootURL() -> URL {
     return documentsDirectory.appendingPathComponent("Blink")
 }
 
-func defaultMediaStorage(rootURL: URL = defaultMediaStorageRootURL()) -> MediaStorage {
+func defaultMediaStorage(rootURL: URL = defaultMediaStorageRootURL()) -> MediaStorage & ExistingMediaStorage {
     FileBasedMediaStorage(rootURL: rootURL)
 }

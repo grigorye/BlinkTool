@@ -13,6 +13,7 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/grigorye/BlinkKit", branch: "main"),
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.2.0"),
+        .package(url: "https://github.com/apple/swift-async-algorithms", from: "0.0.3"),
     ],
     targets: [
         .executableTarget(
@@ -20,6 +21,7 @@ let package = Package(
             dependencies: [
                 "BlinkKit",
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
+                .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
             ]
         ),
         .testTarget(

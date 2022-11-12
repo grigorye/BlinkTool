@@ -1,11 +1,18 @@
 import BlinkOpenAPI
 import Foundation
 
-struct FileBasedMediaStorage: MediaStorage {
+struct FileBasedMediaStorage: MediaStorage, ExistingMediaStorage {
     
     func urlForMedia(_ media: Media) -> URL {
         let path = storageRelativePath(for: media)
         return rootURL.appendingPathComponent(path, isDirectory: false)
+    }
+    
+    func existingMedia() async throws -> [URL] {
+        let existingMedia = (FileManager.default.enumerator(at: rootURL.resolvingSymlinksInPath(), includingPropertiesForKeys: nil)!.allObjects as! [URL]).filter {
+            $0.isFileURL && $0.pathExtension == "mp4"
+        }
+        return existingMedia
     }
     
     var rootURL: URL

@@ -1,6 +1,6 @@
-import GETracing
 import ArgumentParser
 import BlinkKit
+import GETracing
 
 protocol BlinkCommand: AsyncParsableCommand {
     var globalOptions: GlobalOptions { get }
@@ -36,6 +36,7 @@ struct BlinkTool: AsyncParsableCommand {
                 GetVideoEventsMedia.self,
                 GetVideo.self,
                 ToggleCamera.self,
+                RemoveObsoleteMedia.self,
             ]
         )
     }()
