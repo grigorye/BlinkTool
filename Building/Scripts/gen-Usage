@@ -1,5 +1,8 @@
 #! /bin/bash
 
+set +x
+set -euo pipefail
+
 BlinkTool() {
     swift run BlinkTool "$@"
 }
@@ -13,7 +16,10 @@ $(BlinkTool help)
 ## Commands
 EOF
 
-for i in $(BlinkTool help|gsed -n '/^SUBCOMMANDS:/,/^$/{p;/^$/q}'|tail +2|tail -r|tail +2|cut -f 3 -d ' '); do
+# shellcheck disable=SC2207
+commands=($(BlinkTool help | gsed -n '/^SUBCOMMANDS:/,/^$/{p;/^$/q}' | tail +2 | tail -r | tail +2 | cut -f 3 -d ' '))
+
+for i in "${commands[@]}"; do
     cat <<EOF
 ### $i
 
