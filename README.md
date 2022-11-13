@@ -38,49 +38,76 @@ SUBCOMMANDS:
 ```
 
 ## Commands
-### remove-obsolete-media
+### login
 
 ```
-OVERVIEW: Remove media that is no longer available remotely.
+OVERVIEW: Login into account
 
-USAGE: blink-tool remove-obsolete-media [--destination <destination>] --email <email> [--password <password>] [--reauth <reauth>] [--json <json>]
+USAGE: blink-tool login --email <email> [--password <password>] [--reauth <reauth>] [--json <json>]
 
 OPTIONS:
-  --destination <destination>
-                          Root
   --email <email>         E-mail
   --password <password>   Password
   --reauth <reauth>       Reauthenticate (default: true)
   --json <json>           Enable JSON Output
   -h, --help              Show help information.
 ```
-### toggle-camera
+### verify-pin
 
 ```
-OVERVIEW: Toggle camera
+OVERVIEW: Verify PIN
 
-USAGE: blink-tool toggle-camera --network-id <network-id> --camera-id <camera-id> --on --off --email <email> [--password <password>] [--reauth <reauth>] [--json <json>]
+USAGE: blink-tool verify-pin --pin <pin> --email <email> [--password <password>] [--reauth <reauth>] [--json <json>]
+
+OPTIONS:
+  --pin <pin>             Pin
+  --email <email>         E-mail
+  --password <password>   Password
+  --reauth <reauth>       Reauthenticate (default: true)
+  --json <json>           Enable JSON Output
+  -h, --help              Show help information.
+```
+### home-screen
+
+```
+OVERVIEW: Show home screen info
+
+USAGE: blink-tool home-screen --email <email> [--password <password>] [--reauth <reauth>] [--json <json>]
+
+OPTIONS:
+  --email <email>         E-mail
+  --password <password>   Password
+  --reauth <reauth>       Reauthenticate (default: true)
+  --json <json>           Enable JSON Output
+  -h, --help              Show help information.
+```
+### get-camera-thumbnail
+
+```
+OVERVIEW: Download Camera Thumbnail
+
+USAGE: blink-tool get-camera-thumbnail --network-id <network-id> --camera-id <camera-id> --email <email> [--password <password>] [--reauth <reauth>] [--json <json>]
 
 OPTIONS:
   --network-id <network-id>
                           Network ID
   --camera-id <camera-id> Camera ID
-  --on/--off              On/Off
   --email <email>         E-mail
   --password <password>   Password
   --reauth <reauth>       Reauthenticate (default: true)
   --json <json>           Enable JSON Output
   -h, --help              Show help information.
 ```
-### get-video
+### get-video-events
 
 ```
-OVERVIEW: Get video
+OVERVIEW: Get video events
 
-USAGE: blink-tool get-video --media <media> --email <email> [--password <password>] [--reauth <reauth>] [--json <json>]
+USAGE: blink-tool get-video-events [--page <page>] [--since <since>] --email <email> [--password <password>] [--reauth <reauth>] [--json <json>]
 
 OPTIONS:
-  --media <media>         Media Path
+  --page <page>           Page
+  --since <since>         Since date
   --email <email>         E-mail
   --password <password>   Password
   --reauth <reauth>       Reauthenticate (default: true)
@@ -107,76 +134,49 @@ OPTIONS:
   --json <json>           Enable JSON Output
   -h, --help              Show help information.
 ```
-### get-video-events
+### get-video
 
 ```
-OVERVIEW: Get video events
+OVERVIEW: Get video
 
-USAGE: blink-tool get-video-events [--page <page>] [--since <since>] --email <email> [--password <password>] [--reauth <reauth>] [--json <json>]
+USAGE: blink-tool get-video --media <media> --email <email> [--password <password>] [--reauth <reauth>] [--json <json>]
 
 OPTIONS:
-  --page <page>           Page
-  --since <since>         Since date
+  --media <media>         Media Path
   --email <email>         E-mail
   --password <password>   Password
   --reauth <reauth>       Reauthenticate (default: true)
   --json <json>           Enable JSON Output
   -h, --help              Show help information.
 ```
-### get-camera-thumbnail
+### toggle-camera
 
 ```
-OVERVIEW: Download Camera Thumbnail
+OVERVIEW: Toggle camera
 
-USAGE: blink-tool get-camera-thumbnail --network-id <network-id> --camera-id <camera-id> --email <email> [--password <password>] [--reauth <reauth>] [--json <json>]
+USAGE: blink-tool toggle-camera --network-id <network-id> --camera-id <camera-id> --on --off --email <email> [--password <password>] [--reauth <reauth>] [--json <json>]
 
 OPTIONS:
   --network-id <network-id>
                           Network ID
   --camera-id <camera-id> Camera ID
+  --on/--off              On/Off
   --email <email>         E-mail
   --password <password>   Password
   --reauth <reauth>       Reauthenticate (default: true)
   --json <json>           Enable JSON Output
   -h, --help              Show help information.
 ```
-### home-screen
+### remove-obsolete-media
 
 ```
-OVERVIEW: Show home screen info
+OVERVIEW: Remove media that is no longer available remotely.
 
-USAGE: blink-tool home-screen --email <email> [--password <password>] [--reauth <reauth>] [--json <json>]
+USAGE: blink-tool remove-obsolete-media [--destination <destination>] --email <email> [--password <password>] [--reauth <reauth>] [--json <json>]
 
 OPTIONS:
-  --email <email>         E-mail
-  --password <password>   Password
-  --reauth <reauth>       Reauthenticate (default: true)
-  --json <json>           Enable JSON Output
-  -h, --help              Show help information.
-```
-### verify-pin
-
-```
-OVERVIEW: Verify PIN
-
-USAGE: blink-tool verify-pin --pin <pin> --email <email> [--password <password>] [--reauth <reauth>] [--json <json>]
-
-OPTIONS:
-  --pin <pin>             Pin
-  --email <email>         E-mail
-  --password <password>   Password
-  --reauth <reauth>       Reauthenticate (default: true)
-  --json <json>           Enable JSON Output
-  -h, --help              Show help information.
-```
-### login
-
-```
-OVERVIEW: Login into account
-
-USAGE: blink-tool login --email <email> [--password <password>] [--reauth <reauth>] [--json <json>]
-
-OPTIONS:
+  --destination <destination>
+                          Root
   --email <email>         E-mail
   --password <password>   Password
   --reauth <reauth>       Reauthenticate (default: true)
