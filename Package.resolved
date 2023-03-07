@@ -28,6 +28,15 @@
       }
     },
     {
+      "identity" : "getracing",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/grigorye/GETracing",
+      "state" : {
+        "branch" : "master",
+        "revision" : "86ba1be97e0124475f1d36ff050ec94910abe5e2"
+      }
+    },
+    {
       "identity" : "swift-argument-parser",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-argument-parser",
