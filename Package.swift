@@ -12,6 +12,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/grigorye/BlinkKit", branch: "main"),
+        .package(url: "https://github.com/grigorye/GETracing", branch: "master"),
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.2.0"),
         .package(url: "https://github.com/apple/swift-async-algorithms", from: "0.0.3"),
     ],
@@ -20,6 +21,7 @@ let package = Package(
             name: "BlinkTool",
             dependencies: [
                 "BlinkKit",
+                "GETracing",
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
                 .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
             ]
