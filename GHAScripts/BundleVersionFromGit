@@ -1,0 +1,18 @@
+#! /bin/bash
+
+set -x
+set -euo pipefail
+
+versionNumber="$1"
+shift
+
+trunk="$1"
+shift
+
+commits=$(git rev-list --count HEAD)
+commitsInBranch=$(git rev-list --count "$trunk"..HEAD)
+commitsInTrunk=$((commits - commitsInBranch))
+
+bundleVersion="$versionNumber.$commitsInTrunk.$commitsInBranch"
+
+echo "$bundleVersion"
