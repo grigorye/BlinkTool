@@ -25,7 +25,6 @@ cat >"$tmpfile" <<-EOF
 let bundleVersion = "$bundleVersion"
 EOF
 
-# shellcheck disable=SC2154
-if ! diff "$__BUNDLE_VERSION_FILE" "$tmpfile"; then
+if ! diff "${__BUNDLE_VERSION_FILE:?}" "$tmpfile"; then
     cp "$tmpfile" "$__BUNDLE_VERSION_FILE"
 fi
