@@ -24,7 +24,14 @@ let package = Package(
                 "GETracing",
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
                 .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
+            ],
+            plugins: [
+                "GenerateBundleVersion"
             ]
+        ),
+        .plugin(
+            name: "GenerateBundleVersion",
+            capability: .buildTool()
         ),
         .testTarget(
             name: "BlinkToolTests",
