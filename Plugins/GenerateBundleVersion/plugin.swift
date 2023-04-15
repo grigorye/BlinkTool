@@ -7,19 +7,20 @@ struct GenerateBundleVersion: BuildToolPlugin {
     func createBuildCommands(context: PackagePlugin.PluginContext, target: PackagePlugin.Target) async throws -> [PackagePlugin.Command] {
         let bundleVersionFile = context.pluginWorkDirectory.appending("BundleVersion.swift")
         
-        let arguments = prebuildCommandArguments(context: context, arguments: [
+        let arguments = [
             "SPMBuildScripts/GenerateBundleVersionDotSwift"
-        ])
-        let environment = prebuildCommandEnvironment(context: context, environment: [
-            "__BUNDLE_VERSION_FILE": bundleVersionFile
-        ])
+        ]
+        
+        let environment: [String: CustomStringConvertible] = [
+            "__BUNDLE_VERSION_FILE": bundleVersionFile,
+        ]
         
         return ([
             .prebuildCommand(
                 displayName: "Generate Bundle Version",
                 executable: .init("/bin/bash"),
-                arguments: arguments,
-                environment: environment,
+                arguments: prebuildCommandArguments(context: context, arguments: arguments),
+                environment: prebuildCommandEnvironment(context: context, environment: environment),
                 outputFilesDirectory: context.pluginWorkDirectory
             ),
         ])
@@ -28,7 +29,7 @@ struct GenerateBundleVersion: BuildToolPlugin {
 
 func prebuildCommandEnvironment(context: PackagePlugin.PluginContext, environment: [String: CustomStringConvertible]) -> [String: CustomStringConvertible] {
     // .prebuildCommand does not have any environment, propagate the current environment as a workaround.
-    environment.merging(ProcessInfo.processInfo.environment, uniquingKeysWith: { $1 })
+    environment.merging(ProcessInfo.processInfo.environment, uniquingKeysWith: { old, new in old })
 }
 
 func prebuildCommandArguments(context: PackagePlugin.PluginContext, arguments: [CustomStringConvertible]) -> [CustomStringConvertible] {
