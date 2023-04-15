@@ -37,6 +37,7 @@ struct BlinkTool: AsyncParsableCommand {
                 GetVideo.self,
                 ToggleCamera.self,
                 RemoveObsoleteMedia.self,
+                Version.self,
             ]
         )
     }()
