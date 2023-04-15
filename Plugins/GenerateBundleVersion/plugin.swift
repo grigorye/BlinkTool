@@ -28,7 +28,7 @@ struct GenerateBundleVersion: BuildToolPlugin {
 
 func prebuildCommandEnvironment(context: PackagePlugin.PluginContext, environment: [String: CustomStringConvertible]) -> [String: CustomStringConvertible] {
     // .prebuildCommand does not have any environment, propagate the current environment as a workaround.
-    environment.merging(ProcessInfo().environment, uniquingKeysWith: { $1 })
+    environment.merging(ProcessInfo.processInfo.environment, uniquingKeysWith: { $1 })
 }
 
 func prebuildCommandArguments(context: PackagePlugin.PluginContext, arguments: [CustomStringConvertible]) -> [CustomStringConvertible] {
