@@ -1,1 +1,2 @@
 disable=SC2250
+disable=SC2292 # Don't force [[ ]] over [].
