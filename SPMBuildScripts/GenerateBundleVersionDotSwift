@@ -11,7 +11,7 @@ bn=$(basename "$0")
 majorVersion="0.1"
 trunk=main
 
-bundleVersion=$("$wd"/../GHAScripts/BundleVersionFromGit "$majorVersion" "$trunk")
+bundleVersion=${__BUNDLE_VERSION:-$("$wd"/../GHAScripts/BundleVersionFromGit "$majorVersion" "$trunk")}
 
 tmpfile=$(mktemp /tmp/"$bn".XXXXXX)
 
