@@ -1,0 +1,14 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches: [main]
+  workflow_dispatch: {}
+  workflow_call: {}
+
+jobs:
+  build:
+    uses: grigorye/ReusableWorkflows/.github/workflows/build-spm-tool.yml@v9

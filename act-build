@@ -1,0 +1,17 @@
+#! /bin/bash
+
+set -x
+set -euo pipefail
+
+arch="$(uname -m)"
+
+act \
+    -W .github/workflows/build.yml \
+    --container-architecture linux/"$arch" \
+    --artifact-server-path="$PWD"/artifacts \
+    --env __GIT_COMMITS_IN_BRANCH=10 \
+    --env __GIT_COMMITS=100 \
+    --env __GIT_STATUS=true \
+    --use-gitignore \
+    --reuse \
+    "$@"

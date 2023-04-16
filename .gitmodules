@@ -1,0 +1,3 @@
+[submodule "Submodules/ReusableWorkflows"]
+	path = Submodules/ReusableWorkflows
+	url = https://github.com/grigorye/ReusableWorkflows
