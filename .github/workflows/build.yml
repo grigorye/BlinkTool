@@ -11,4 +11,4 @@ on:
 
 jobs:
   build:
-    uses: grigorye/ReusableWorkflows/.github/workflows/build-spm-tool.yml@v9
+    uses: grigorye/ReusableWorkflows/.github/workflows/build-spm-tool.yml@v10
