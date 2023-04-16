@@ -33,6 +33,7 @@ SUBCOMMANDS:
   get-video               Get video
   toggle-camera           Toggle camera
   remove-obsolete-media   Remove media that is no longer available remotely.
+  version                 Print the current version of the tool
 
   See 'blink-tool help <subcommand>' for detailed help.
 ```
@@ -181,5 +182,15 @@ OPTIONS:
   --password <password>   Password
   --reauth <reauth>       Reauthenticate (default: true)
   --json <json>           Enable JSON Output
+  -h, --help              Show help information.
+```
+### version
+
+```
+OVERVIEW: Print the current version of the tool
+
+USAGE: blink-tool version
+
+OPTIONS:
   -h, --help              Show help information.
 ```
