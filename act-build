@@ -10,5 +10,4 @@ act \
     --container-architecture linux/"$arch" \
     --artifact-server-path="$PWD"/artifacts \
     --use-gitignore \
-    --reuse \
     "$@"
